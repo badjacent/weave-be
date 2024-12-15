@@ -63,7 +63,7 @@ jobs:
             -configuration Release \
             -archivePath $PWD/build/weavebe.xcarchive \
             DEVELOPMENT_TEAM=RW5BVGDRL5 \
-            -allowProvisioningUpdates
+            -allowProvisioningUpdates \
             archive 
           
           xcodebuild -exportArchive \
