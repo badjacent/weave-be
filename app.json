@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hollerson.weavebe"
+      "bundleIdentifier": "com.anonymous.weave-be"
     },
     "android": {
       "adaptiveIcon": {
