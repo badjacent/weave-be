@@ -47,7 +47,7 @@ jobs:
       - name: Download provisioning profile
         uses: apple-actions/download-provisioning-profiles@v2
         with:
-          bundle-id: 'com.anonymous.weave-be'
+          bundle-id: 'com.hollerson.weavebe'
           profile-type: 'IOS_APP_STORE'
           issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
           api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
@@ -63,7 +63,7 @@ jobs:
             -configuration Release \
             -archivePath $PWD/build/weavebe.xcarchive \
             DEVELOPMENT_TEAM=RW5BVGDRL5 \
-            -allowProvisioningUpdates \
+            -allowProvisioningUpdates
             archive 
           
           xcodebuild -exportArchive \
