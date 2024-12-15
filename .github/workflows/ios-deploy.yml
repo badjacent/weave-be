@@ -1,0 +1,70 @@
+name: iOS Build and Deploy
+on:
+  push:
+    branches: [ main ]  # adjust this to your main branch name
+
+jobs:
+  build:
+    name: Build and Deploy iOS
+    runs-on: macos-latest
+    
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          npx expo install --check
+
+      - name: Generate iOS files
+        run: |
+          npx expo prebuild -p ios
+          cp .github/ios-build-config/ExportOptions.plist ios/
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1.0'
+          bundler-cache: true
+
+      - name: Install CocoaPods
+        working-directory: ios
+        run: pod install
+
+      - name: Set up code signing
+        uses: apple-actions/import-codesign-certs@v2
+        with: 
+          p12-file-base64: ${{ secrets.IOS_P12_BASE64 }}
+          p12-password: ${{ secrets.IOS_P12_PASSWORD }}
+
+      - name: Download provisioning profile
+        uses: apple-actions/download-provisioning-profiles@v2
+        with:
+          bundle-id: 'com.anonymous.weave-be'
+          profile-type: 'IOS_APP_STORE'
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+
+      - name: Build & Upload to TestFlight
+        env:
+          EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
+          EXPO_APPLE_PASSWORD: ${{ secrets.EXPO_APPLE_PASSWORD }}
+        run: |
+          xcodebuild -workspace ios/weavebe.xcworkspace \
+            -scheme weavebe \
+            -configuration Release \
+            -archivePath $PWD/build/weavebe.xcarchive \
+            archive
+          
+          xcodebuild -exportArchive \
+            -archivePath $PWD/build/weavebe.xcarchive \
+            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportPath $PWD/build
