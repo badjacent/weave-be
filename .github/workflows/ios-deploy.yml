@@ -62,12 +62,14 @@ jobs:
             -scheme weavebe \
             -configuration Release \
             -archivePath $PWD/build/weavebe.xcarchive \
-            DEVELOPMENT_TEAM=YOUR_TEAM_ID \
-            archive
+            DEVELOPMENT_TEAM=RW5BVGDRL5 \
+            -allowProvisioningUpdates \
+            archive 
           
           xcodebuild -exportArchive \
             -archivePath $PWD/build/weavebe.xcarchive \
             -exportOptionsPlist ios/ExportOptions.plist \
-            DEVELOPMENT_TEAM=YOUR_TEAM_ID \
-            -exportPath $PWD/build
+            DEVELOPMENT_TEAM=RW5BVGDRL5 \
+            -exportPath $PWD/build \
+            -allowProvisioningUpdates
             
