@@ -50,7 +50,7 @@ jobs:
           mkdir -p ~/.appstoreconnect/private_keys
           echo "$APPSTORE_API_KEY_CONTENTS" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
 
-      - name: Build & Upload to TestFlight
+- name: Build & Upload to TestFlight
         env:
           EXPO_APPLE_ID: ${{ secrets.EXPO_APPLE_ID }}
           EXPO_APPLE_PASSWORD: ${{ secrets.EXPO_APPLE_PASSWORD }}
@@ -62,10 +62,17 @@ jobs:
             -allowProvisioningUpdates \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=RW5BVGDRL5 \
-            archive 
+            PROVISIONING_PROFILE_SPECIFIER="Xcode Managed Profile" \            
+            archive
           
           xcodebuild -exportArchive \
             -archivePath $PWD/build/weavebe.xcarchive \
             -exportOptionsPlist ios/ExportOptions.plist \
             -exportPath $PWD/build \
             -allowProvisioningUpdates
+          
+          xcrun altool --upload-app --type ios \
+            --file "$PWD/build/weavebe.ipa" \
+            --apiKey "${{ secrets.APPSTORE_API_KEY_ID }}" \
+            --apiIssuer "${{ secrets.APPSTORE_ISSUER_ID }}" \
+            --verbose
