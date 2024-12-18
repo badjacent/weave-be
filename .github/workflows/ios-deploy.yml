@@ -62,7 +62,6 @@ jobs:
             -allowProvisioningUpdates \
             CODE_SIGN_STYLE=Automatic \
             DEVELOPMENT_TEAM=RW5BVGDRL5 \
-            PROVISIONING_PROFILE_SPECIFIER="Xcode Managed Profile" \            
             archive
           
           xcodebuild -exportArchive \
