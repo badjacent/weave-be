@@ -26,7 +26,6 @@ jobs:
       - name: Generate iOS files
         run: |
           npx expo prebuild -p ios
-          cp .github/ios-build-config/ExportOptions.plist ios/
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -44,14 +43,12 @@ jobs:
           p12-file-base64: ${{ secrets.IOS_P12_BASE64 }}
           p12-password: ${{ secrets.IOS_P12_PASSWORD }}
 
-      - name: Download provisioning profile
-        uses: apple-actions/download-provisioning-profiles@v2
-        with:
-          bundle-id: 'com.anonymous.weave-be'
-          profile-type: 'IOS_APP_STORE'
-          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+      - name: Configure App Store Connect API
+        env:
+          APPSTORE_API_KEY_CONTENTS: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "$APPSTORE_API_KEY_CONTENTS" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
 
       - name: Build & Upload to TestFlight
         env:
@@ -62,14 +59,13 @@ jobs:
             -scheme weavebe \
             -configuration Release \
             -archivePath $PWD/build/weavebe.xcarchive \
-            DEVELOPMENT_TEAM=RW5BVGDRL5 \
             -allowProvisioningUpdates \
+            CODE_SIGN_STYLE=Automatic \
+            DEVELOPMENT_TEAM=RW5BVGDRL5 \
             archive 
           
           xcodebuild -exportArchive \
             -archivePath $PWD/build/weavebe.xcarchive \
             -exportOptionsPlist ios/ExportOptions.plist \
-            DEVELOPMENT_TEAM=RW5BVGDRL5 \
             -exportPath $PWD/build \
             -allowProvisioningUpdates
-            
