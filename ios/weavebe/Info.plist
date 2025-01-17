@@ -28,7 +28,7 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>myapp</string>
-				<string>com.anonymous.weave-be</string>
+				<string>com.hollerson.weave-be</string>
 			</array>
 		</dict>
 	</array>
