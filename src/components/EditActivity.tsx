@@ -14,6 +14,7 @@ import Slider from '@react-native-community/slider';
 import { activityService } from '../services/activityService';
 import { FIELDS } from '../constants/fields';
 import { Activity } from '../types/types';
+import { spacing, typography, colors, commonStyles, componentStyles } from '../theme/theme';
 
 interface EditActivityProps {
   onActivityUpdated: () => Promise<void>;
@@ -170,86 +171,74 @@ const EditActivity: React.FC<EditActivityProps> = ({ onActivityUpdated, moods })
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#1a1a1a',
+    padding: spacing.lg,
+    backgroundColor: colors.background.primary,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    marginBottom: 20,
+    fontSize: typography.size.large * 1.3,
+    fontWeight: typography.weight.bold,
+    color: colors.text.primary,
+    marginBottom: spacing.lg,
   },
   inputGroup: {
-    marginBottom: 20,
+    marginBottom: spacing.lg,
   },
   label: {
-    color: '#ffffff',
-    marginBottom: 5,
+    color: colors.text.primary,
+    marginBottom: spacing.xs,
   },
   input: {
-    backgroundColor: '#333',
-    color: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#666',
-    padding: 10,
-    borderRadius: 4,
+    ...componentStyles.input,
   },
   moodGrid: {
-    flexDirection: 'row',
+    ...commonStyles.row,
     flexWrap: 'wrap',
-    gap: 10,
+    gap: spacing.md,
   },
   moodItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
+    ...commonStyles.row,
+    marginRight: spacing.md,
   },
   moodLabel: {
-    color: '#ffffff',
-    marginLeft: 5,
+    color: colors.text.primary,
+    marginLeft: spacing.xs,
   },
   sliderContainer: {
-    marginBottom: 15,
+    marginBottom: spacing.md,
   },
   fieldLabel: {
     width: 100,
-    marginBottom: 5,
+    marginBottom: spacing.xs,
   },
   sliderRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    ...commonStyles.row,
   },
   slider: {
     flex: 1,
     height: 40,
   },
   sliderValue: {
-    color: '#ffffff',
+    color: colors.text.primary,
     minWidth: 40,
     textAlign: 'right',
   },
   buttonContainer: {
-    flexDirection: 'row',
-    gap: 10,
-    marginTop: 20,
+    ...commonStyles.row,
+    gap: spacing.md,
+    marginTop: spacing.lg,
   },
   saveButton: {
+    ...componentStyles.button,
     flex: 1,
-    backgroundColor: '#444',
-    padding: 15,
-    borderRadius: 4,
-    alignItems: 'center',
   },
   deleteButton: {
+    ...componentStyles.button,
     flex: 1,
-    backgroundColor: '#c42',
-    padding: 15,
-    borderRadius: 4,
-    alignItems: 'center',
+    backgroundColor: colors.status.danger,
   },
   buttonText: {
-    color: '#ffffff',
-    fontWeight: 'bold',
+    color: colors.text.primary,
+    fontWeight: typography.weight.bold,
   },
 });
 

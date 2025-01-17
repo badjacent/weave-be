@@ -46,7 +46,7 @@ export default function Home() {
   return (
     <View style={{ flex: 1, padding: 20, backgroundColor: '#1a1a1a' }}>
       <MoodList moods={moods} />
-      <Link href="/manage-moods" style={{ color: '#ffffff' }}>Manage Moods</Link>
+      <Link href="/manage-moods" style={{ color: '#ffffff' }}>H Moods</Link>
     </View>
   );
 }

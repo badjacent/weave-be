@@ -9,6 +9,7 @@ import {
   ScrollView 
 } from 'react-native';
 import { moodService } from '../services/moodService';
+import { spacing, typography, colors, commonStyles, componentStyles } from '../theme/theme';
 
 interface MoodManagerProps {
   moods: string[];
@@ -49,7 +50,7 @@ const MoodManager: React.FC<MoodManagerProps> = ({ moods, onMoodsUpdated }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Manage Moods</Text>
+      <Text style={styles.title}>Manage Mbbbboods</Text>
       
       <View style={styles.inputContainer}>
         <TextInput
@@ -89,53 +90,45 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    color: '#ffffff',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    color: colors.text.primary,
+    fontSize: typography.size.large * 1.3,
+    fontWeight: typography.weight.bold,
+    marginBottom: spacing.lg,
   },
   inputContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    gap: 10,
+    ...commonStyles.row,
+    marginBottom: spacing.lg,
+    gap: spacing.md,
   },
   input: {
     flex: 1,
-    backgroundColor: '#333',
-    color: '#fff',
-    borderWidth: 1,
-    borderColor: '#666',
-    padding: 10,
-    borderRadius: 4,
+    ...componentStyles.input,
   },
   addButton: {
-    backgroundColor: '#444',
-    padding: 10,
-    borderRadius: 4,
+    ...componentStyles.button,
     justifyContent: 'center',
   },
   moodList: {
     flex: 1,
   },
   moodItem: {
-    flexDirection: 'row',
+    ...commonStyles.row,
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
-    backgroundColor: '#333',
-    marginBottom: 10,
+    padding: spacing.md,
+    backgroundColor: colors.background.secondary,
+    marginBottom: spacing.md,
     borderRadius: 4,
   },
   moodText: {
-    color: '#ffffff',
+    color: colors.text.primary,
   },
   deleteButton: {
-    backgroundColor: '#c42',
-    padding: 10,
-    borderRadius: 4,
+    ...componentStyles.button,
+    backgroundColor: colors.status.danger,
   },
   buttonText: {
-    color: '#ffffff',
+    color: colors.text.primary,
   },
 });
 

@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { FIELDS } from '../constants/fields';
 import { Activity as ActivityType } from '../types/types';
+import { spacing, typography, commonStyles, colors } from '../theme/theme';
 
 type ActivityProps = {
   id: string;
@@ -74,29 +75,27 @@ const Activity: React.FC<ActivityProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
-    marginBottom: 2,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    padding: spacing.sm,
+    marginBottom: spacing.xs,
     height: 30,
+    ...commonStyles.row,
+    justifyContent: 'space-between',
   },
   nameContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
+    ...commonStyles.row,
+    ...commonStyles.gap10,
   },
   diceEmoji: {
-    fontSize: 16,
+    fontSize: typography.size.regular,
   },
   name: {
-    fontSize: 16,
-    color: '#ffffff',
-    fontWeight: 'bold',
+    fontSize: typography.size.regular,
+    color: colors.text.primary,
+    fontWeight: typography.weight.bold,
   },
   fieldsContainer: {
-    flexDirection: 'row',
-    gap: 5,
+    ...commonStyles.row,
+    ...commonStyles.gap5,
   },
   fieldBox: {
     width: 20,
